@@ -72,30 +72,38 @@
                 <h1 class="text-9xl mt-10">0</h1>
               </div>
               <div class="w-full pl-6 pr-6 grid grid-cols-4 text-white mt-8">
-                <div class="bg-black p-2 text-center">
-                    Time
+                <div class="bg-black p-2 text-center">Time</div>
+                <div
+                  class="bg-black p-2 text-center border-l-2 border-zinc-900"
+                >
+                  Count
                 </div>
-                <div class="bg-black p-2 text-center border-l-2 border-zinc-900">
-                    Count
+                <div
+                  class="bg-black p-2 text-center border-l-2 border-zinc-900"
+                >
+                  Produce
                 </div>
-                <div class="bg-black p-2 text-center border-l-2 border-zinc-900">
-                    Produce
+                <div
+                  class="bg-black p-2 text-center border-l-2 border-zinc-900"
+                >
+                  Total
                 </div>
-                <div class="bg-black p-2 text-center border-l-2 border-zinc-900">
-                    Total
+
+                <div class="bg-gray-800 p-2 text-center">13:00 - 14:00</div>
+                <div
+                  class="bg-gray-800 p-2 text-center border-l-2 border-zinc-900"
+                >
+                  0
                 </div>
-                
-                <div class="bg-gray-800 p-2 text-center">
-                    13:00 - 14:00
+                <div
+                  class="bg-gray-800 p-2 text-center border-l-2 border-zinc-900"
+                >
+                  0
                 </div>
-                <div class="bg-gray-800 p-2 text-center border-l-2 border-zinc-900">
-                    0
-                </div>
-                <div class="bg-gray-800 p-2 text-center border-l-2 border-zinc-900">
-                    0
-                </div>
-                <div class="bg-gray-800 p-2 text-center border-l-2 border-zinc-900">
-                    0
+                <div
+                  class="bg-gray-800 p-2 text-center border-l-2 border-zinc-900"
+                >
+                  0
                 </div>
               </div>
             </div>
@@ -108,7 +116,21 @@
               ผลสรุป
             </div>
             <div>
-              <div id="container" class="w-5/6 h-60 m-auto rounded-lg mt-10"></div>
+              <div class="p-10 pt-8 pb-0">
+                <h3 class="text-white text-2xl mb-4 bg-zinc-800 p-2 rounded-lg">
+                  รวมทั้งหมด : 0
+                </h3>
+                <h3 class="text-white text-2xl mb-4 bg-zinc-800 p-2 rounded-lg">
+                  เป้าหมาย ชม. : 0
+                </h3>
+                <h3 class="text-white text-2xl bg-zinc-800 p-2 rounded-lg">
+                  เป้าหมาย วัน. : 0
+                </h3>
+              </div>
+              <div
+                id="container"
+                class="w-5/6 h-60 m-auto rounded-lg mt-10"
+              ></div>
             </div>
           </div>
         </div>
@@ -123,8 +145,13 @@
 
           const plotChart = () => {
             Highcharts.chart("container", {
+              chart: {
+                backgroundColor: "#18181B",
+                color: '#FFFFFF'
+              },
               title: {
                 text: "Result",
+                color: '#FFFFFF'
               },
 
               accessibility: {
@@ -143,11 +170,8 @@
 
               yAxis: {
                 type: "logarithmic",
-                title: {
-                  text: "Number of Internet Users (in millions)",
-                },
               },
-
+              legend: { enabled: false },
               tooltip: {
                 headerFormat: "<b>{series.name}</b><br />",
                 pointFormat: "{point.y} million(s)",
@@ -158,13 +182,13 @@
                   name: "Internet Users",
                   keys: ["y", "color"],
                   data: [
-                    [16, "#0000ff"],
-                    [361, "#8d0073"],
-                    [1018, "#ba0046"],
-                    [2025, "#d60028"],
-                    [3192, "#eb0014"],
-                    [4673, "#fb0004"],
-                    [5200, "#ff0000"],
+                    [16, "#6657f1"],
+                    [361, "#6657f1"],
+                    [1018, "#FFFFFF"],
+                    [2025, "#FFFFFF"],
+                    [3192, "#FFFFFF"],
+                    [4673, "#FFFFFF"],
+                    [5200, "#FFFFFF"],
                   ],
                   color: {
                     linearGradient: {
@@ -174,8 +198,8 @@
                       y2: 0,
                     },
                     stops: [
-                      [0, "#0000ff"],
-                      [1, "#ff0000"],
+                      [0, "#6657f1"],
+                      [1, "#6657f1"],
                     ],
                   },
                 },
