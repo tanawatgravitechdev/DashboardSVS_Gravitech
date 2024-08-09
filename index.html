@@ -22,31 +22,55 @@
     <div id="app" class="bg-black w-screen h-screen select-none">
       <div class="h-20 w-full bg-zinc-800 flex item-center p-4">
         <img src="./assets/icon.png" class="w-12" />
-        <div class="text-white right-0 block absolute mt-3 ">
+        <div class="text-white right-0 block absolute mt-3">
           <span class="bg-zinc-900 p-4 rounded-lg mr-2 w-20">{{dateNow}} </span>
           <span class="bg-zinc-900 p-4 rounded-lg mr-5 w-20">{{dateTime}}</span>
         </div>
       </div>
       <div class="w-full">
         <div class="w-5/6 grid grid-cols-3 m-auto mt-10 gap-10">
-          <div class="bg-zinc-900 w-full h-80 rounded-lg">
+          <div class="bg-zinc-900 w-full ยb-10 rounded-lg">
             <div
-              class="w-full h-14 bg-zinc-700 text-white leading-10 pt-2 text-center"
+              class="w-full h-14 text-white bg-zinc-700 leading-10 pt-2 text-center"
               style="font-size: 25px"
             >
-              13:00 - 14:00
+              {{timeTitle}}
             </div>
-            <div class="w-full border-10 border-gray-400">
-              <h3>จำนวนถาด</h3>
-              <div class="w-5/6"></div>
+            <div class="w-full">
+              <h3 class="text-white text-center mt-8 text-2xl">จำนวนถาด</h3>
+              <div
+                class="w-60 h-60 border-8 border-zinc-700 block rounded-full text-white m-auto text-center mt-6"
+              >
+                <h1 class="text-8xl mt-10">0</h1>
+                <h3 class="text-2xl">ถาด</h3>
+              </div>
+              <h3 class="text-white text-center mt-10 text-2xl">
+                จำนวนชิ้นงาน
+              </h3>
+              <div
+                class="w-60 h-60 border-8 border-zinc-700 block rounded-full text-white m-auto text-center mt-6 mb-6"
+              >
+                <h1 class="text-8xl mt-10">0</h1>
+                <h3 class="text-2xl">ชิ้น</h3>
+              </div>
             </div>
           </div>
-          <div class="bg-zinc-900 w-full h-80 rounded-lg">
+          <div class="bg-zinc-900 w-full rounded-lg">
             <div
               class="w-full h-14 bg-zinc-700 text-white leading-10 pt-2 text-center text-lg"
               style="font-size: 25px"
             >
               รายงาน ณ วันนี้
+            </div>
+            <div>
+              <h3 class="text-white text-center mt-8 text-2xl">
+                ยอดผลิตรวม ณ ตอนนี้
+              </h3>
+              <div
+                class="w-60 h-60 border-8 border-blue-700 block rounded-full text-white m-auto text-center mt-6"
+              >
+                <h1 class="text-9xl mt-10">0</h1>
+              </div>
             </div>
           </div>
           <div class="bg-zinc-900 w-full pb-10 rounded-lg">
@@ -137,25 +161,39 @@
             plotChart();
             setInterval(() => {
               let tmp = new Date();
-              dateTime.value = "เวลา "+
+              dateTime.value =
+                "เวลา " +
                 tmp.getHours() +
                 ":" +
                 tmp.getMinutes() +
                 ":" +
                 tmp.getSeconds();
               dateNow.value =
-                "วันที่ " + tmp.getDate() + " เดือน " + (tmp.getMonth()+1) + " ปี " + (tmp.getFullYear()+543);
+                "วันที่ " +
+                tmp.getDate() +
+                " เดือน " +
+                (tmp.getMonth() + 1) +
+                " ปี " +
+                (tmp.getFullYear() + 543);
+              timeTitle.value =
+                tmp.getHours() +
+                ":00" +
+                " - " +
+                (tmp.getHours() + 1 > 23 ? "0" : tmp.getHours() + 1) +
+                ":00";
             }, 1000);
           });
 
           const dateTime = ref("");
           const dateNow = ref("");
+          const timeTitle = ref("");
 
           return {
             message,
             plotChart,
             dateTime,
             dateNow,
+            timeTitle,
           };
         },
       }).mount("#app");
