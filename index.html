@@ -164,6 +164,7 @@
         push,
         update,
         get,
+        onValue,
       } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-database.js";
       // TODO: Add SDKs for Firebase products that you want to use
       // https://firebase.google.com/docs/web/setup#available-libraries
@@ -194,6 +195,10 @@
         console.log(path);
         return get(child(ref(db), path));
       };
+
+      window.readDataRL = (path, fun) => {
+        return onValue(ref(db, path), fun)
+      }
     </script>
 
     <script>
@@ -303,8 +308,26 @@
 
             setTimeout(() => {
               const tmpDate = new Date();
-              window
-                .readData(
+            //   window
+            //     .readData(
+            //       "factory/" +
+            //         tmpDate.getFullYear() +
+            //         "/" +
+            //         (tmpDate.getMonth() + 1) +
+            //         "/" +
+            //         tmpDate.getDate() +
+            //         "/" +
+            //         tmpDate.getHours()
+            //     )
+            //     .then((snapshot) => {
+            //       const data = snapshot.val();
+            //       if (data["total"]) {
+            //         numberPack.value = data["total"];
+            //       }
+            //     });
+
+            window
+                .readDataRL(
                   "factory/" +
                     tmpDate.getFullYear() +
                     "/" +
@@ -313,8 +336,7 @@
                     tmpDate.getDate() +
                     "/" +
                     tmpDate.getHours()
-                )
-                .then((snapshot) => {
+                ,(snapshot) => {
                   const data = snapshot.val();
                   if (data["total"]) {
                     numberPack.value = data["total"];
