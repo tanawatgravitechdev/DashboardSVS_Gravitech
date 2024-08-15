@@ -81,7 +81,7 @@
                 <div
                   class="w-60 h-60 border-8 border-blue-700 block rounded-full text-white m-auto text-center mt-6"
                 >
-                  <h1 class="text-9xl mt-10">0</h1>
+                  <h1 class="text-6xl mt-20">{{sum* productCount}}</h1>
                 </div>
                 <div class="w-full pl-6 pr-6 grid grid-cols-4 text-white mt-8">
                   <div class="bg-black p-2 text-center">Time</div>
@@ -100,22 +100,32 @@
                   >
                     Total
                   </div>
-
-                  <div class="bg-gray-800 p-2 text-center">13:00 - 14:00</div>
-                  <div
-                    class="bg-gray-800 p-2 text-center border-l-2 border-zinc-900"
-                  >
-                    0
+                </div>
+                <div
+                  v-for="item in Array.from(new Array(6).keys())"
+                  class="w-full pl-6 pr-6 grid grid-cols-4 text-white"
+                >
+                  <div class="bg-gray-800 p-2 text-center">
+                    {{(new Date().getHours() - item)}}:00 - {{(new
+                    Date().getHours() + 1 - item)}}:00
                   </div>
                   <div
                     class="bg-gray-800 p-2 text-center border-l-2 border-zinc-900"
                   >
-                    0
+                    {{dataTable[new Date().getHours() - item] ? dataTable[new
+                    Date().getHours() - item] : 0}}
                   </div>
                   <div
                     class="bg-gray-800 p-2 text-center border-l-2 border-zinc-900"
                   >
-                    0
+                    {{dataTable[new Date().getHours() - item] ? dataTable[new
+                    Date().getHours() - item] * productCount : 0}}
+                  </div>
+                  <div
+                    class="bg-gray-800 p-2 text-center border-l-2 border-zinc-900"
+                  >
+                    {{dataTable[new Date().getHours() - item] ? dataTable[new
+                    Date().getHours() - item] * productCount : 0}}
                   </div>
                 </div>
               </div>
@@ -132,7 +142,7 @@
                   <h3
                     class="text-white text-2xl mb-4 bg-zinc-800 p-2 rounded-lg"
                   >
-                    รวมทั้งหมด : 0
+                    รวมทั้งหมด : {{sum* productCount}}
                   </h3>
                   <h3
                     class="text-white text-2xl mb-4 bg-zinc-800 p-2 rounded-lg"
@@ -197,8 +207,8 @@
       };
 
       window.readDataRL = (path, fun) => {
-        return onValue(ref(db, path), fun)
-      }
+        return onValue(ref(db, path), fun);
+      };
     </script>
 
     <script>
@@ -209,12 +219,27 @@
           const numberPack = ref(0);
           const listHistoryKey = ref([]);
           const mode = ref("Viewer");
+          const sum = ref(0);
 
           const dateTime = ref("");
           const dateNow = ref("");
           const timeTitle = ref("");
 
+          const dataTable = ref({});
+          const productCount = ref(48);
+
           const plotChart = () => {
+            const tmp = [];
+            Array.from(new Array(6).keys()).forEach((item) => {
+              tmp.push([
+                dataTable.value[new Date().getHours() - item]
+                  ? dataTable.value[new Date().getHours() - item] *
+                    productCount.value
+                  : 0,
+                "#FFFFFF",
+              ]);
+            });
+            console.log(dataTable.value, tmp);
             Highcharts.chart("container", {
               chart: {
                 backgroundColor: "#18181B",
@@ -238,7 +263,16 @@
                 title: {
                   text: "Year",
                 },
-                categories: [1995, 2000, 2005, 2010, 2015, 2020, 2023],
+                categories: Array.from(new Array(6).keys())
+                  .reverse()
+                  .map(
+                    (it) =>
+                      new Date().getHours() -
+                      it +
+                      ":00 - " +
+                      (new Date().getHours() + 1 - it) +
+                      ":00"
+                  ),
               },
 
               yAxis: {
@@ -246,23 +280,14 @@
               },
               legend: { enabled: false },
               tooltip: {
-                headerFormat: "<b>{series.name}</b><br />",
-                pointFormat: "{point.y} million(s)",
+                pointFormat: "{point.y} Produce",
               },
 
               series: [
                 {
                   name: "Internet Users",
                   keys: ["y", "color"],
-                  data: [
-                    [16, "#6657f1"],
-                    [361, "#6657f1"],
-                    [1018, "#FFFFFF"],
-                    [2025, "#FFFFFF"],
-                    [3192, "#FFFFFF"],
-                    [4673, "#FFFFFF"],
-                    [5200, "#FFFFFF"],
-                  ],
+                  data: tmp.reverse(),
                   color: {
                     linearGradient: {
                       x1: 0,
@@ -281,7 +306,6 @@
           };
 
           onMounted(() => {
-            plotChart();
             setInterval(() => {
               let tmp = new Date();
               dateTime.value =
@@ -308,43 +332,62 @@
 
             setTimeout(() => {
               const tmpDate = new Date();
-            //   window
-            //     .readData(
-            //       "factory/" +
-            //         tmpDate.getFullYear() +
-            //         "/" +
-            //         (tmpDate.getMonth() + 1) +
-            //         "/" +
-            //         tmpDate.getDate() +
-            //         "/" +
-            //         tmpDate.getHours()
-            //     )
-            //     .then((snapshot) => {
-            //       const data = snapshot.val();
-            //       if (data["total"]) {
-            //         numberPack.value = data["total"];
-            //       }
-            //     });
+              //   window
+              //     .readData(
+              //       "factory/" +
+              //         tmpDate.getFullYear() +
+              //         "/" +
+              //         (tmpDate.getMonth() + 1) +
+              //         "/" +
+              //         tmpDate.getDate() +
+              //         "/" +
+              //         tmpDate.getHours()
+              //     )
+              //     .then((snapshot) => {
+              //       const data = snapshot.val();
+              //       if (data["total"]) {
+              //         numberPack.value = data["total"];
+              //       }
+              //     });
 
-            window
-                .readDataRL(
-                  "factory/" +
-                    tmpDate.getFullYear() +
-                    "/" +
-                    (tmpDate.getMonth() + 1) +
-                    "/" +
-                    tmpDate.getDate() +
-                    "/" +
-                    tmpDate.getHours()
-                ,(snapshot) => {
+              window.readDataRL(
+                "factory/" +
+                  tmpDate.getFullYear() +
+                  "/" +
+                  (tmpDate.getMonth() + 1) +
+                  "/" +
+                  tmpDate.getDate() +
+                  "/" +
+                  tmpDate.getHours(),
+                (snapshot) => {
                   const data = snapshot.val();
                   if (data["total"]) {
                     numberPack.value = data["total"];
                   }
-                });
-            },1000);
+                }
+              );
 
-            window.addEventListener("keydown", (e) => {
+              window.readDataRL(
+                "factory/" +
+                  tmpDate.getFullYear() +
+                  "/" +
+                  (tmpDate.getMonth() + 1) +
+                  "/" +
+                  tmpDate.getDate(),
+                (snapshot) => {
+                  const tmp = {};
+                  const tmpData = snapshot.val();
+
+                  Object.keys(tmpData).forEach((item) => {
+                    tmp[item] = tmpData[item]["total"];
+                  });
+
+                  dataTable.value = tmp;
+                }
+              );
+            }, 1000);
+
+            window.addEventListener("keyup", (e) => {
               console.log(e["key"]);
               if (mode.value === "Admin") {
                 if (e["key"] == "ArrowRight") {
@@ -392,6 +435,17 @@
             window.writeData(tmp);
           });
 
+          watch(dataTable, () => {
+            let tmp = 0;
+            console.log(Object.values(dataTable.value));
+            Object.values(dataTable.value).forEach((item) => {
+              tmp += parseInt(item);
+            });
+            sum.value = tmp;
+
+            plotChart();
+          });
+
           return {
             message,
             plotChart,
@@ -401,6 +455,9 @@
             numberPack,
             numberPcs,
             mode,
+            dataTable,
+            sum,
+            productCount,
           };
         },
       }).mount("#app");
