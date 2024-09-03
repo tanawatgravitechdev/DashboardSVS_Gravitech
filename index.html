@@ -388,10 +388,10 @@
             }, 1000);
 
             setInterval(()=>{
-              if(new Date().getMinutes() == 0){
+              if(new Date().getMinutes() == 0 && new Date().getSeconds()){
                 numberPack.value = 0;
               }
-            },1000)
+            },500)
 
             window.addEventListener("keyup", (e) => {
               console.log(e);
