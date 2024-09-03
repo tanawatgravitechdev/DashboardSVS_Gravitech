@@ -81,7 +81,12 @@
                 <div
                   class="w-60 h-60 border-8 border-blue-700 block rounded-full text-white m-auto text-center mt-6"
                 >
-                  <h1 class="text-6xl mt-20">{{sum* productCount}}</h1>
+                  <h1 class="text-6xl mt-20">
+                    {{dataTable[new Date().getHours()] ? dataTable[new
+                    Date().getHours() ] * productCount + (dataTable[new
+                    Date().getHours() - 1] ? dataTable[new Date().getHours() -
+                    1] * productCount : 0) : 0}}
+                  </h1>
                 </div>
                 <div class="w-full pl-6 pr-6 grid grid-cols-4 text-white mt-8">
                   <div class="bg-black p-2 text-center">Time</div>
@@ -125,7 +130,9 @@
                     class="bg-gray-800 p-2 text-center border-l-2 border-zinc-900"
                   >
                     {{dataTable[new Date().getHours() - item] ? dataTable[new
-                    Date().getHours() - item] * productCount + (dataTable[new Date().getHours() - item - 1] ? dataTable[new Date().getHours() - item - 1] * productCount : 0) : 0}}
+                    Date().getHours() - item] * productCount + (dataTable[new
+                    Date().getHours() - item - 1] ? dataTable[new
+                    Date().getHours() - item - 1] * productCount : 0) : 0}}
                   </div>
                 </div>
               </div>
@@ -387,11 +394,11 @@
               );
             }, 1000);
 
-            setInterval(()=>{
-              if(new Date().getMinutes() == 0 && new Date().getSeconds()){
+            setInterval(() => {
+              if (new Date().getMinutes() == 0 && new Date().getSeconds()) {
                 numberPack.value = 0;
               }
-            },500)
+            }, 500);
 
             window.addEventListener("keyup", (e) => {
               console.log(e);
@@ -409,9 +416,7 @@
                 if (
                   listHistoryKey.value
                     .join("")
-                    .includes(
-                      "ControlvControlvControlcControlvControlv"
-                    )
+                    .includes("ControlvControlvControlcControlvControlv")
                 ) {
                   mode.value = "Admin";
                 }
@@ -448,7 +453,7 @@
               tmp += parseInt(item);
             });
             sum.value = tmp;
-            console.log(dataTable.value)
+            console.log(dataTable.value);
             plotChart();
           });
 
