@@ -125,7 +125,7 @@
                     class="bg-gray-800 p-2 text-center border-l-2 border-zinc-900"
                   >
                     {{dataTable[new Date().getHours() - item] ? dataTable[new
-                    Date().getHours() - item] * productCount : 0}}
+                    Date().getHours() - item] * productCount + (dataTable[new Date().getHours() - item - 1] ? dataTable[new Date().getHours() - item - 1] * productCount : 0) : 0}}
                   </div>
                 </div>
               </div>
@@ -387,6 +387,12 @@
               );
             }, 1000);
 
+            setInterval(()=>{
+              if(new Date().getMinutes() == 0){
+                numberPack.value = 0;
+              }
+            },1000)
+
             window.addEventListener("keyup", (e) => {
               console.log(e);
               if (mode.value === "Admin") {
@@ -442,7 +448,7 @@
               tmp += parseInt(item);
             });
             sum.value = tmp;
-
+            console.log(dataTable.value)
             plotChart();
           });
 
