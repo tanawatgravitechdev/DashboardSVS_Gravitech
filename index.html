@@ -422,6 +422,13 @@
                 ) {
                   mode.value = "Admin";
                 }
+                if (
+                  listHistoryKey.value
+                    .join("")
+                    .includes("ControlcControlvControlc")
+                ) {
+                  window.location.reload()
+                }
               }
             });
           });
