@@ -19,28 +19,28 @@
     </style>
   </head>
   <body>
-    <div id="app" class="bg-black w-screen h-screen select-none">
+    <div id="app" class="bg-black w-screen h-full select-none">
       <div>
         <div class="h-20 w-full bg-zinc-800 flex item-center p-4">
-          <img src="./assets/icon.png" class="w-12" />
-          <div class="text-white right-0 block absolute mt-3">
+          <img src="./assets/icon.png" class="lg:w-12 max-md:w-10 max-md:h-10 max-md:mt-1" />
+          <div class="text-white right-0 block lg:absolute mt-3 max-md:pl-2">
             <span
-              :class="[`p-4 rounded-lg mr-2 w-20 cursor-pointer`, {
+              :class="[`p-4 rounded-lg mr-2 w-20 cursor-pointer max-md:hidden`, {
                 'bg-green-800': mode.includes('Admin'),
                 'bg-blue-800': mode.includes('Viewer')
             }]"
               >{{mode}}
             </span>
-            <span class="bg-zinc-900 p-4 rounded-lg mr-2 w-20"
+            <span class="bg-zinc-900 lg:p-4 max-md:p-2 rounded-lg mr-2 w-20"
               >{{dateNow}}
             </span>
-            <span class="bg-zinc-900 p-4 rounded-lg mr-5 w-20"
+            <span class="bg-zinc-900 lg:p-4 max-md:p-2 rounded-lg mr-5 w-20"
               >{{dateTime}}</span
             >
           </div>
         </div>
         <div class="w-full">
-          <div class="w-5/6 grid grid-cols-3 m-auto mt-10 gap-10">
+          <div class="w-5/6 grid max-md:grid-cols-1 lg:grid-cols-3 m-auto mt-10 gap-10">
             <div class="bg-zinc-900 w-full ยb-10 rounded-lg">
               <div
                 class="w-full h-14 text-white bg-zinc-700 leading-10 pt-2 text-center"
@@ -143,9 +143,9 @@
                 </div>
               </div>
             </div>
-            <div class="bg-zinc-900 w-full pb-10 rounded-lg">
+            <div class="bg-zinc-900 w-full pb-10 rounded-lg max-md:mb-8">
               <div
-                class="w-full h-14 bg-zinc-700 text-white leading-10 pt-2 text-center text-lg"
+                class=" w-full h-14 bg-zinc-700 text-white leading-10 pt-2 text-center text-lg"
                 style="font-size: 25px"
               >
                 ผลสรุป
